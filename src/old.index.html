@@ -1,9 +1,13 @@
-import { useState } from 'react'
-
-function App() {
-
-  return (
-    <>
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+  </head>
+  <body class="root">
+    <div class="page">
       <header class="header">
         <img
           class="header__logo"
@@ -37,14 +41,12 @@ function App() {
           ></button>
         </section>
         <section class="cards">
-          <ul class="cards__list">
-          </ul>
+          <ul class="cards__list"></ul>
         </section>
       </main>
       <footer class="footer">
         <p class="footer__copyright" lang="en">&copy; 2022. Mesto Russia</p>
       </footer>
-
       <div class="popup popup_type_profile">
         <div class="popup__window">
           <button
@@ -115,6 +117,9 @@ function App() {
               maxlength="30"
               required
             />
+            <!-- input names were name="image-title" and name="image-url"
+                 find out later where to change them. New Cards dont add
+                because name is different in client/server  -->
             <span class="popup__input-error-msg image-title-input-error"></span>
             <input
               class="popup__input popup__input_type_image-url"
@@ -151,21 +156,21 @@ function App() {
       <div class="popup popup_type_confirm">
         <div class="popup__window">
           <button
-          class="popup__close-btn"
-          type="button"
-          aria-label="Закрыть попап"
+            class="popup__close-btn"
+            type="button"
+            aria-label="Закрыть попап"
           ></button>
-        <h2 class="popup__title">Вы уверены?</h2>
-        <form
-        class="popup__form popup__form_type_confirm"
-        name="confirm"
-        method="POST"
-        >
-          <button class="popup__submit-btn" type="submit" aria-label="Да">
-            Да
-          </button>
-        </form>
-      </div>
+          <h2 class="popup__title">Вы уверены?</h2>
+          <form
+            class="popup__form popup__form_type_confirm"
+            name="confirm"
+            method="POST"
+          >
+            <button class="popup__submit-btn" type="submit" aria-label="Да">
+              Да
+            </button>
+          </form>
+        </div>
       </div>
 
       <div class="popup popup_type_change-avatar">
@@ -177,27 +182,27 @@ function App() {
           ></button>
           <h2 class="popup__title">Обновить аватар</h2>
           <form
-          class="popup__form popup__form_type_change-avatar"
-          name="changeAvatar"
+            class="popup__form popup__form_type_change-avatar"
+            name="changeAvatar"
             method="POST"
-            >
+          >
             <input
-            class="popup__input popup__input_type_avatar-url"
+              class="popup__input popup__input_type_avatar-url"
               id="avatar-url-input"
               name="avatar"
               type="url"
               placeholder="Ссылка на картинку"
               required
-              />
-              <span class="popup__input-error-msg avatar-url-input-error"></span>
-              <button
+            />
+            <span class="popup__input-error-msg avatar-url-input-error"></span>
+            <button
               class="popup__submit-btn"
               type="submit"
               aria-label="Сохранить изменения"
             >
-            Сохранить
-          </button>
-        </form>
+              Сохранить
+            </button>
+          </form>
         </div>
       </div>
 
@@ -207,20 +212,19 @@ function App() {
           <img class="cards__image" src="#" alt="#" />
           <div class="cards__description">
             <h2 class="cards__title">
+              <!-- The image title will go here with JS -->
             </h2>
             <div class="cards__like-container">
               <button
-              class="cards__like"
-              aria-label="Лайкнуть фото"
-              type="button"
+                class="cards__like"
+                aria-label="Лайкнуть фото"
+                type="button"
               ></button>
               <p class="cards__counter"></p>
             </div>
           </div>
         </li>
       </template>
-    </>
-  )
-}
-
-export default App
+    </div>
+  </body>
+</html>
