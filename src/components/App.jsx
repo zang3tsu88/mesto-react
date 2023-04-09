@@ -1,44 +1,13 @@
+import Footer from "./Footer";
 import Header from "./Header";
+import Main from "./Main";
 
 function App() {
   return (
     <>
       <Header />
-
-
-      <main className="main">
-        <section className="profile">
-          <button className="profile__avatar-btn">
-            <img
-              className="profile__avatar"
-              src="<%=require('./images/avatar_jack_iv_kusto.jpg')%>"
-              alt="Аватарка пользователя"
-            />
-          </button>
-          <div className="profile__user-info">
-            <h1 className="profile__user-name">Жак-Ив Кусто</h1>
-            <button
-              className="profile__edit-btn"
-              type="button"
-              aria-label="Редактировать профиль"
-            ></button>
-            <p className="profile__user-occupation">Исследователь океана</p>
-          </div>
-          <button
-            className="profile__btn-add-img"
-            type="button"
-            aria-label="Добавить изображение"
-          ></button>
-        </section>
-        <section className="cards">
-          <ul className="cards__list"></ul>
-        </section>
-      </main>
-      <footer className="footer">
-        <p className="footer__copyright" lang="en">
-          &copy; 2022. Mesto Russia
-        </p>
-      </footer>
+      <Main />
+      <Footer />
 
       <div className="popup popup_type_profile">
         <div className="popup__window">
@@ -52,7 +21,7 @@ function App() {
             className="popup__form popup__form_type_edit-profile"
             name="editProfileFormPopup"
             method="POST"
-            novalidate
+            noValidate
           >
             <input
               className="popup__input popup__input_type_name"
@@ -60,8 +29,8 @@ function App() {
               name="name"
               type="text"
               placeholder="Имя"
-              minlength="2"
-              maxlength="40"
+              minLength="2"
+              maxLength="40"
               required
             />
             <span className="popup__input-error-msg name-input-error"></span>
@@ -71,8 +40,8 @@ function App() {
               name="about"
               type="text"
               placeholder="О себе"
-              minlength="2"
-              maxlength="200"
+              minLength="2"
+              maxLength="200"
               required
             />
             <span className="popup__input-error-msg occupation-input-error"></span>
@@ -106,8 +75,8 @@ function App() {
               name="name"
               type="text"
               placeholder="Название"
-              minlength="2"
-              maxlength="30"
+              minLength="2"
+              maxLength="30"
               required
             />
             <span className="popup__input-error-msg image-title-input-error"></span>
