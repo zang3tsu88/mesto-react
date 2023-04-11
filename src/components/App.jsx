@@ -22,6 +22,16 @@ function App() {
     setIsAddPlacePopupOpen(true)
   }
 
+  /**
+   * Я не понял описание к задаче
+   * "Показывайте полноразмерную картинку при клике"
+   * особенно начиная со второго пункта, потом еще какую-то
+   * функцию в пример добавили...
+   * Наверное я сделал не правильно, не так как надо было,
+   * но сделал вот так, через event target
+   * .. и функция та, какая-то не пригодилась..
+   * не знаю, в общем.
+   */
   function handleCardClick(e) {
     if (e.target.classList.contains("cards__image")) {
       setSelectedCard({ name: e.target.alt, link: e.target.src })
