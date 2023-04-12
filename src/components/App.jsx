@@ -35,6 +35,7 @@ function App() {
   function handleCardClick(e) {
     if (e.target.classList.contains("cards__image")) {
       setSelectedCard({ name: e.target.alt, link: e.target.src })
+      console.log(e.target)
       console.dir(e.target)
     }
   }
