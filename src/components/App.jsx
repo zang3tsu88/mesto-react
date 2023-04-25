@@ -11,6 +11,7 @@ function App() {
   const [ isEditProfilePopupOpen, setIsEditProfilePopupOpen ] = useState(false)
   const [ isAddPlacePopupOpen, setIsAddPlacePopupOpen ] = useState(false)
   const [ selectedCard, setSelectedCard ] = useState({name: "", link: ""} )
+  const [ isImagePopupOpen, setIsImagePopupOpen ] = useState(false)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -22,29 +23,16 @@ function App() {
     setIsAddPlacePopupOpen(true)
   }
 
-  /**
-   * Я не понял описание к задаче
-   * "Показывайте полноразмерную картинку при клике"
-   * особенно начиная со второго пункта, потом еще какую-то
-   * функцию в пример добавили...
-   * Наверное я сделал не правильно, не так как надо было,
-   * но сделал вот так, через event target
-   * .. и функция та, какая-то не пригодилась..
-   * не знаю, в общем.
-   */
-  function handleCardClick(e) {
-    if (e.target.classList.contains("cards__image")) {
-      setSelectedCard({ name: e.target.alt, link: e.target.src })
-      console.log(e.target)
-      console.dir(e.target)
-    }
+  function handleCardClick(card) {
+    setIsImagePopupOpen(true)
+    setSelectedCard(card)
   }
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
-    setSelectedCard({name: "", link: ""})
+    setIsImagePopupOpen(false)
   }
 
   return (
@@ -61,7 +49,7 @@ function App() {
         <PopupWithForm
           title={"Обновить аватар"}
           name={"change-avatar"}
-          isOpen={isEditAvatarPopupOpen && "popup_active"}
+          isOpen={isEditAvatarPopupOpen ? "popup_active" : ""}
           onClose={closeAllPopups}
           buttonText={"Сохранить"}
         >
@@ -79,7 +67,7 @@ function App() {
         <PopupWithForm
           title={"Редактировать профиль"}
           name={"profile"}
-          isOpen={isEditProfilePopupOpen && "popup_active"}
+          isOpen={isEditProfilePopupOpen ? "popup_active" : ""}
           onClose={closeAllPopups}
           buttonText={"Сохранить"}
         >
@@ -110,7 +98,7 @@ function App() {
         <PopupWithForm
           title={"Новое место"}
           name={"add-image"}
-          isOpen={isAddPlacePopupOpen && "popup_active"}
+          isOpen={isAddPlacePopupOpen ? "popup_active" : ""}
           onClose={closeAllPopups}
           buttonText={"Создать"}
         >
@@ -138,6 +126,7 @@ function App() {
 
 
         <ImagePopup
+          isOpen={isImagePopupOpen ? "popup_active" : ""}
           onClose={closeAllPopups}
           card={selectedCard}
         />

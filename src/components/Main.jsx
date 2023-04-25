@@ -5,8 +5,8 @@ import Card from "./Card"
 import defaultAvatarImage from "../images/avatar_jack_iv_kusto.jpg"
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [ userName, setUserName ] = useState("Жак-Ив Кусто")
-  const [ userDescription, setUserDescription ] = useState("Исследователь океана")
+  const [ userName, setUserName ] = useState("Loading name...")
+  const [ userDescription, setUserDescription ] = useState("Loading info...")
   const [ userAvatar, setUserAvatar ] = useState(defaultAvatarImage)
   const [ cards, setCards ] = useState([])
 

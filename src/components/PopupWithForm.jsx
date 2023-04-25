@@ -16,7 +16,11 @@ function PopupWithForm({ title, name, children, isOpen, onClose, buttonText }) {
           noValidate // может не надо
         >
           {children}
-          <button className="popup__submit-btn" type="submit" aria-label="Да">
+          <button
+            className="popup__submit-btn"
+            type="submit"
+            aria-label={buttonText}
+          >
             {buttonText}
           </button>
         </form>
