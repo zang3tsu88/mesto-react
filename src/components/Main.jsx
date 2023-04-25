@@ -1,25 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import api from "../utils/Api"
 import Card from "./Card"
-//in case avatar wont load from server
-import defaultAvatarImage from "../images/avatar_jack_iv_kusto.jpg"
+import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [ userName, setUserName ] = useState("Loading name...")
-  const [ userDescription, setUserDescription ] = useState("Loading info...")
-  const [ userAvatar, setUserAvatar ] = useState(defaultAvatarImage)
+  const currentUser = useContext(CurrentUserContext)
   const [ cards, setCards ] = useState([])
-
-  useEffect(()=> {
-    api.getCurrentUser()
-    .then(res => {
-      console.log(res);
-      setUserName(res.name)
-      setUserDescription(res.about)
-      setUserAvatar(res.avatar)
-    })
-    .catch( err => console.log(err))
-  }, [])
 
   useEffect(()=>{
     api.getCards()
@@ -36,19 +22,19 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         >
           <img
             className="profile__avatar"
-            src={userAvatar}
+            src={currentUser.avatar}
             alt="Аватарка пользователя"
           />
         </button>
         <div className="profile__user-info">
-          <h1 className="profile__user-name">{userName}</h1>
+          <h1 className="profile__user-name">{currentUser.name}</h1>
           <button
             onClick={onEditProfile}
             className="profile__edit-btn"
             type="button"
             aria-label="Редактировать профиль"
           ></button>
-          <p className="profile__user-occupation">{userDescription}</p>
+          <p className="profile__user-occupation">{currentUser.about}</p>
         </div>
         <button
           onClick={onAddPlace}
