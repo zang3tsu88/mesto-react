@@ -1,6 +1,12 @@
+import classNames from "classnames"
+
 function ImagePopup({ isOpen, onClose, card }) {
   return (
-    <div className={`popup popup_type_open-image ${isOpen}`}>
+    <div className={classNames(
+      "popup",
+      "popup_type_open-image",
+      {"popup_active": isOpen})}
+    >
       <figure className="popup__image-figure">
         <button
           onClick={onClose}

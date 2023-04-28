@@ -66,15 +66,10 @@ class Api {
     }).then(this._getJson);
   }
 
-  likeCard(id) {
+  changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
-      headers: this._getHeaders(),
-    }).then(this._getJson);
-  }
-  unlikeCard(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "DELETE",
+      // depending if the card is liked - like/unlike card request
+      method: isLiked ? "DELETE" : "PUT",
       headers: this._getHeaders(),
     }).then(this._getJson);
   }
