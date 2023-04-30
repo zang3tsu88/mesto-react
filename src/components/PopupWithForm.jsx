@@ -1,11 +1,20 @@
-import classNames from "classnames"
+import classNames from "classnames";
 
-function PopupWithForm({ title, name, children, isOpen, onClose,onSubmit, buttonText,  }) {
+function PopupWithForm({
+  title,
+  name,
+  children,
+  isOpen,
+  onClose,
+  onSubmit,
+  buttonText,
+}) {
   return (
-    <div className={classNames(
-      "popup",
-      `popup_type_${name}`,
-      {"popup_active": isOpen})}>
+    <div
+      className={classNames("popup", `popup_type_${name}`, {
+        popup_active: isOpen,
+      })}
+    >
       <div className="popup__window">
         <button
           className="popup__close-btn"
@@ -14,7 +23,8 @@ function PopupWithForm({ title, name, children, isOpen, onClose,onSubmit, button
           onClick={onClose}
         ></button>
         <h2 className="popup__title">{title}</h2>
-        <form onSubmit={onSubmit}
+        <form
+          onSubmit={onSubmit}
           className={`popup__form popup__form_type_${name}`} // тут обычный класс или {name}. АПДЕЙТ: Может этот класс вообще не нужен. Он не используется в стилях
           name={name}
           method="POST"
@@ -31,7 +41,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose,onSubmit, button
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default PopupWithForm
+export default PopupWithForm;

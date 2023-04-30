@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.jsx";
 //in case avatar wont load from server
-import defaultAvatarImage from "../images/avatar_jack_iv_kusto.jpg";
+import defaultAvatarImage from "../images/loading_circle.gif";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -39,7 +39,6 @@ function App() {
       .getCurrentUser()
       .then((res) => setCurrentUser(res))
       .catch((err) => console.log(err));
-    console.log(currentUser); // CONSOLE.LOG
   }, []);
 
   function handleEditAvatarClick() {
@@ -88,20 +87,35 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleUpdateUser(currentUserInfo) {
+  function handleUpdateUser(userInfo) {
     api
-      .createNewUser(currentUserInfo)
-      .then((userInfo) => setCurrentUser({ ...currentUser, userInfo }))
+      .createNewUser(userInfo)
+      .then((data) => setCurrentUser(data))
       .catch((err) => console.log(err));
 
     closeAllPopups();
   }
 
-  function handleUpdateAvatar(currentUserAvatar) {
+  function handleUpdateAvatar(userAvatar) {
     api
-      .createNewAvatar(currentUserAvatar)
-      .then((userAvatar) => setCurrentUser({ ...currentUser, userAvatar }))
+      .createNewAvatar(userAvatar)
+      .then((data) => setCurrentUser(data))
+      // как правильней?
+      // И почему если { ...c, ...userAvatar } не в скобках, то VsCode ругается?
+      // .then((userAvatar) => setCurrentUser((c) =>  ({ ...c, ...userAvatar })))
+      // .then((userAvatar) => setCurrentUser({ ...currentUser, ...userAvatar }))
       .catch((err) => console.log(err));
+
+    closeAllPopups();
+  }
+
+  function handleAddPlaceSubmit(userCard) {
+    api
+      .createNewCard(userCard)
+      .then((newCard) => setCards([newCard, ...cards]))
+      .catch((err) => console.log(err));
+
+    closeAllPopups();
   }
 
   return (
@@ -131,34 +145,11 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
         />
 
-        <PopupWithForm
-          title={"Новое место"}
-          name={"add-image"}
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          buttonText={"Создать"}
-        >
-          <input
-            className="popup__input popup__input_type_image-title"
-            id="image-title-input"
-            name="name"
-            type="text"
-            placeholder="Название"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="popup__input-error-msg image-title-input-error"></span>
-          <input
-            className="popup__input popup__input_type_image-url"
-            id="url-input"
-            name="link"
-            type="url"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="popup__input-error-msg url-input-error"></span>
-        </PopupWithForm>
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         <ImagePopup
           isOpen={isImagePopupOpen}

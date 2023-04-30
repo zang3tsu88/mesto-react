@@ -1,18 +1,22 @@
-import { useState, useEffect, useContext } from "react"
-import Card from "./Card"
-import { CurrentUserContext } from "../contexts/CurrentUserContext"
+import { useContext } from "react";
+import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete, cards }) {
-
-  const currentUser = useContext(CurrentUserContext)
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+  cards,
+}) {
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <main className="main">
       <section className="profile">
-        <button
-          onClick={onEditAvatar}
-          className="profile__avatar-btn"
-        >
+        <button onClick={onEditAvatar} className="profile__avatar-btn">
           <img
             className="profile__avatar"
             src={currentUser.avatar}
@@ -38,7 +42,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike
       </section>
       <section className="cards">
         <ul className="cards__list">
-          {cards.map(card => {
+          {cards.map((card) => {
             return (
               <Card
                 key={card._id}
@@ -46,12 +50,13 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike
                 onCardClick={onCardClick}
                 onCardLike={onCardLike}
                 onCardDelete={onCardDelete}
-                />)
+              />
+            );
           })}
         </ul>
       </section>
     </main>
-  )
+  );
 }
 
-export default Main
+export default Main;
