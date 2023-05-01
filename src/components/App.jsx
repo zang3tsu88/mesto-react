@@ -41,12 +41,36 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    function closeOnEsc(e) {
+      if (e.key === "Escape") {
+        closeAllPopups();
+      }
+    }
+
+    function closeOnOverlayClick(e) {
+      if (e.target.classList.contains("popup_active")) {
+        closeAllPopups();
+      }
+    }
+
+    document.addEventListener("keyup", closeOnEsc);
+    document.addEventListener("click", closeOnOverlayClick);
+
+    return () => {
+      document.removeEventListener("click", closeOnOverlayClick);
+      document.removeEventListener("keyup", closeOnEsc);
+    };
+  });
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
+
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
+
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
@@ -102,6 +126,7 @@ function App() {
       .then((data) => setCurrentUser(data))
       // как правильней?
       // И почему если { ...c, ...userAvatar } не в скобках, то VsCode ругается?
+      // .then((userAvatar) => setCurrentUser((c) =>  { ...c, ...userAvatar }))
       // .then((userAvatar) => setCurrentUser((c) =>  ({ ...c, ...userAvatar })))
       // .then((userAvatar) => setCurrentUser({ ...currentUser, ...userAvatar }))
       .catch((err) => console.log(err));

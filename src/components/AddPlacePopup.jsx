@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
@@ -13,6 +13,12 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       link: linkRef.current.value,
     });
   }
+
+  // меня напрягает что тут и в EditProfilePopup я дублирую этот код(обнуляю поля). Как можно сделать так чтобы этого избежать.
+  useEffect(() => {
+    nameRef.current.value = "";
+    linkRef.current.value = "";
+  }, [onClose]);
 
   return (
     <PopupWithForm

@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from "react"
-import PopupWithForm from "./PopupWithForm"
+import { useContext, useEffect, useState } from "react";
+import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
-  const [ name, setName ] = useState("");
-  const [ description, setDescription ] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-  useEffect(()=> {
+  useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser]);
@@ -58,7 +58,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       />
       <span className="popup__input-error-msg occupation-input-error"></span>
     </PopupWithForm>
-  )
+  );
 }
 
-export default EditProfilePopup
+export default EditProfilePopup;
