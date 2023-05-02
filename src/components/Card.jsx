@@ -12,6 +12,10 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const isOwn = currentUser._id === card.owner._id;
   const isLiked = card.likes.some( like => like._id === currentUser._id)
 
+  function handleCardDelete() {
+    onCardDelete(card)
+  }
+
   return (
     <li className="cards__item">
       {isOwn && <button

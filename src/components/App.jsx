@@ -10,6 +10,7 @@ import defaultAvatarImage from "../images/loading_circle.gif";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -26,6 +27,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ name: "", link: "" });
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
 
   useEffect(() => {
     api
@@ -181,6 +183,8 @@ function App() {
           onClose={closeAllPopups}
           card={selectedCard}
         />
+
+        <ConfirmationPopup />
       </CurrentUserContext.Provider>
     </>
   );
