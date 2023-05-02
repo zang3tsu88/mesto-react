@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
   const nameRef = useRef();
   const linkRef = useRef();
 
@@ -26,7 +26,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       name={"add-image"}
       isOpen={isOpen}
       onClose={onClose}
-      buttonText={"Создать"}
+      buttonText={isLoading ? "Сохранение..." : "Создать"}
       onSubmit={handleSubmit}
     >
       <input
