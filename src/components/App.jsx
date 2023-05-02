@@ -87,6 +87,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
+    setIsConfirmPopupOpen(false);
   }
 
   function handleCardLike(card) {
@@ -104,6 +105,11 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleCardDeleteConfirm(card) {
+    setIsConfirmPopupOpen(true);
+    setSelectedCard(card);
+  }
+
   function handleCardDelete(card) {
     api
       .deleteCard(card._id)
@@ -111,6 +117,8 @@ function App() {
         setCards((state) => state.filter((c) => c._id !== card._id));
       })
       .catch((err) => console.log(err));
+
+    closeAllPopups();
   }
 
   function handleUpdateUser(userInfo) {
@@ -126,11 +134,6 @@ function App() {
     api
       .createNewAvatar(userAvatar)
       .then((data) => setCurrentUser(data))
-      // как правильней?
-      // И почему если { ...c, ...userAvatar } не в скобках, то VsCode ругается?
-      // .then((userAvatar) => setCurrentUser((c) =>  { ...c, ...userAvatar }))
-      // .then((userAvatar) => setCurrentUser((c) =>  ({ ...c, ...userAvatar })))
-      // .then((userAvatar) => setCurrentUser({ ...currentUser, ...userAvatar }))
       .catch((err) => console.log(err));
 
     closeAllPopups();
@@ -155,7 +158,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDeleteConfirm={handleCardDeleteConfirm}
           cards={cards}
         />
         <Footer />
@@ -184,7 +187,12 @@ function App() {
           card={selectedCard}
         />
 
-        <ConfirmationPopup />
+        <ConfirmationPopup
+          isOpen={isConfirmPopupOpen}
+          onClose={closeAllPopups}
+          card={selectedCard}
+          onCardDelete={handleCardDelete}
+        />
       </CurrentUserContext.Provider>
     </>
   );
