@@ -1,19 +1,23 @@
 import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
+import { useForm } from "react-hook-form";
+import classNames from "classnames";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
-  const inputRef = useRef();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid, isDirty },
+  } = useForm({ mode: "onBlur" });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    onUpdateAvatar({
-      avatar: inputRef.current.value,
-    });
+  function onSubmit({ avatar }) {
+    onUpdateAvatar({ avatar });
+    reset();
   }
 
   useEffect(() => {
-    inputRef.current.value = "";
+    reset();
   }, [onClose]);
 
   return (
@@ -23,18 +27,35 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
       isOpen={isOpen}
       onClose={onClose}
       buttonText={isLoading ? "Сохранение..." : "Сохранить"}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
+      isValid={isValid}
+      isDirty={isDirty}
     >
       <input
-        className="popup__input popup__input_type_avatar-url"
-        id="avatar-url-input"
-        name="avatar"
-        type="url"
+        className={classNames("popup__input", {
+          popup__input_type_error: errors.avatar?.message,
+        })}
         placeholder="Ссылка на картинку"
-        required
-        ref={inputRef}
+        type="url"
+        {...register("avatar", {
+          required: {
+            value: true,
+            message: "Please enter a URL.",
+          },
+          pattern: {
+            value:
+              /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+            message: "Invalid URL format",
+          },
+        })}
       />
-      <span className="popup__input-error-msg avatar-url-input-error"></span>
+      <span
+        className={classNames("popup__input-error-msg", {
+          "popup__input-error-msg_active": errors.avatar?.message,
+        })}
+      >
+        {errors.avatar?.message}
+      </span>
     </PopupWithForm>
   );
 }

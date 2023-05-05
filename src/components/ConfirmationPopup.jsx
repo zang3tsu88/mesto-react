@@ -1,8 +1,13 @@
+import { useForm } from "react-hook-form";
 import PopupWithForm from "./PopupWithForm";
 
 function ConfirmationPopup({ isOpen, onClose, onCardDelete, card, isLoading }) {
-  function handleCardDelete(e) {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    formState: { isValid, isDirty },
+  } = useForm();
+
+  function handleCardDelete() {
     onCardDelete(card);
   }
 
@@ -13,7 +18,9 @@ function ConfirmationPopup({ isOpen, onClose, onCardDelete, card, isLoading }) {
       isOpen={isOpen}
       onClose={onClose}
       buttonText={isLoading ? "Сохранение..." : "Да"}
-      onSubmit={handleCardDelete}
+      onSubmit={handleSubmit(handleCardDelete)}
+      isValid={isValid}
+      isDirty={!isDirty}
     />
   );
 }

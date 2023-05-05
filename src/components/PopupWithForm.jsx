@@ -8,6 +8,8 @@ function PopupWithForm({
   onClose,
   onSubmit,
   buttonText,
+  isValid,
+  isDirty,
 }) {
   return (
     <div
@@ -21,20 +23,23 @@ function PopupWithForm({
           type="button"
           aria-label="Закрыть попап"
           onClick={onClose}
-        ></button>
+        />
         <h2 className="popup__title">{title}</h2>
         <form
           onSubmit={onSubmit}
-          className={`popup__form popup__form_type_${name}`} // тут обычный класс или {name}. АПДЕЙТ: Может этот класс вообще не нужен. Он не используется в стилях
+          className={"popup__form"}
           name={name}
           method="POST"
-          noValidate // может не надо
+          noValidate
         >
           {children}
           <button
-            className="popup__submit-btn"
+            className={classNames("popup__submit-btn", {
+              "popup__submit-btn_inactive": !isValid || !isDirty,
+            })}
             type="submit"
             aria-label={buttonText}
+            disabled={!isValid || !isDirty}
           >
             {buttonText}
           </button>
