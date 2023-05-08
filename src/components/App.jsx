@@ -58,14 +58,29 @@ function App() {
       }
     }
 
-    document.addEventListener("keyup", closeOnEsc);
-    document.addEventListener("click", closeOnOverlayClick);
-
+    if (
+      isEditAvatarPopupOpen ||
+      isEditProfilePopupOpen ||
+      isAddPlacePopupOpen ||
+      isImagePopupOpen ||
+      isConfirmPopupOpen
+    ) {
+      document.addEventListener("keyup", closeOnEsc);
+      document.addEventListener("click", closeOnOverlayClick);
+    }
     return () => {
       document.removeEventListener("click", closeOnOverlayClick);
       document.removeEventListener("keyup", closeOnEsc);
     };
-  });
+  }, [
+    isEditAvatarPopupOpen,
+    isEditProfilePopupOpen,
+    isAddPlacePopupOpen,
+    isImagePopupOpen,
+    isConfirmPopupOpen,
+  ]);
+  // да, массив я забыл. Только не совсем понял, вы это имели ввиду? "перечислить все состояния модальных окон"
+  // как-то много всего, неужели это необходимо? Может просто [] оставить, без проверки?
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -119,12 +134,11 @@ function App() {
       .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
-      .then(() => setIsLoading(false))
-      .catch((err) => console.log(err));
-    // .finally(() => setIsLoading(false));
-
-    closeAllPopups();
+      // .then(() => setIsLoading(false))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   function handleUpdateUser(userInfo) {
@@ -132,11 +146,13 @@ function App() {
 
     api
       .createNewUser(userInfo)
-      .then((data) => setCurrentUser(data))
-      .then(() => setIsLoading(false))
-      .catch((err) => console.log(err));
-
-    closeAllPopups();
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      // .then(() => setIsLoading(false))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   function handleUpdateAvatar(userAvatar) {
@@ -144,23 +160,30 @@ function App() {
 
     api
       .createNewAvatar(userAvatar)
-      .then((data) => setCurrentUser(data))
-      .then(() => setIsLoading(false))
-      .catch((err) => console.log(err));
-
-    closeAllPopups();
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      // .then(() => setIsLoading(false))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
+
+  // не знаю, с изменением на finally, я теперь даже с slow 3g не успеваю заметить изменения кнопки.. только у удаления карточки.
+  // хотя, я понял почему надо на это поменять. Просто изначально мне казалось что при ошибки как раз должно зависнуть на сохранении и выдать ошибку. Это явно дает понять что проблема
 
   function handleAddPlaceSubmit(userCard) {
     setIsLoading(true);
 
     api
       .createNewCard(userCard)
-      .then((newCard) => setCards([newCard, ...cards]))
-      .then(() => setIsLoading(false))
-      .catch((err) => console.log(err));
-
-    closeAllPopups();
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      // .then(() => setIsLoading(false))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   return (

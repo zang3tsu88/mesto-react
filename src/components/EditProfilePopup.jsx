@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useForm } from "react-hook-form";
@@ -12,17 +12,17 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     handleSubmit,
     reset,
     formState: { errors, isValid, isDirty },
-  } = useForm({ mode: "onBlur" });
+  } = useForm({ mode: "onChange" });
 
   useEffect(() => {
+    reset();
     setValue("name", currentUser.name);
     setValue("about", currentUser.about);
-  }, [isOpen]);
+  }, [isOpen, currentUser, reset, setValue]);
 
   function onSubmit({ name, about }) {
     // Передаём значения управляемых компонентов во внешний обработчик
     onUpdateUser({ name, about });
-    reset();
   }
 
   return (

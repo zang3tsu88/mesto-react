@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
@@ -9,7 +9,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
     handleSubmit,
     reset,
     formState: { errors, isValid, isDirty },
-  } = useForm({ mode: "onBlur" });
+  } = useForm({ mode: "onChange" });
 
   function onSubmit({ name, link }) {
     onAddPlace({ name, link });
@@ -17,7 +17,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
 
   useEffect(() => {
     reset();
-  }, [onClose]);
+  }, [isOpen, reset]);
 
   return (
     <PopupWithForm
